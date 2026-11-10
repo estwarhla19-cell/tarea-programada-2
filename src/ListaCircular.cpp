@@ -31,3 +31,11 @@ bool ListaCircular::eliminar(const string& id) {
     } while (temp != actual);
     return false;
 }
+ListaCircular::~ListaCircular() {
+    if (actual == nullptr) return;
+    NodoCircular* temp = actual; NodoCircular* aux = actual->siguiente;
+    while (aux != actual) { NodoCircular* aBorrar = aux; aux = aux->siguiente; delete aBorrar; }
+    delete actual;
+}
+IteradorCircular ListaCircular::begin() const { return IteradorCircular(actual, cantidad); }
+IteradorCircular ListaCircular::end() const { return IteradorCircular(actual, 0); }
