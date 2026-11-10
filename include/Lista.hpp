@@ -19,6 +19,9 @@ public:
     void registrar(const string& placa, const string& propietario,
                    const string& tipo);
     bool cancelar(const string& placa);
+    
+    // Esta es la declaración que faltaba
+    Vehiculo procesarPrimera();
 
     int getCantidad() const;
     bool estaVacia() const;

@@ -1,4 +1,5 @@
 #include "Lista.hpp"
+#include <stdexcept>
 
 Lista::Lista()
     : cabeza(nullptr), cola(nullptr), cantidad(0), contadorSolicitudes(0) {}
@@ -82,4 +83,22 @@ int Lista::contarPorTipo(const string& tipo) const {
         }
     }
     return contador;
+
+}
+
+Vehiculo Lista::procesarPrimera() {
+    if (cabeza == nullptr) {
+        throw std::underflow_error("No hay solicitudes pendientes.");
+    }
+    Nodo* aBorrar = cabeza;
+    Vehiculo v = aBorrar->dato;
+    
+    cabeza = cabeza->siguiente;
+    if (cabeza == nullptr) {
+        cola = nullptr; // Si solo había un nodo
+    }
+    
+    delete aBorrar;
+    cantidad--;
+    return v;
 }
