@@ -43,3 +43,34 @@ void MatrizEspacios::liberar(int fila, int col) {
         espacios[fila][col] = 0;
     }
 }
+
+void MatrizEspacios::mostrar() const {
+    cout << "  ";
+    for (int j = 0; j < columnas; j++) cout << "C" << j + 1 << " ";
+    cout << "\n";
+    for (int i = 0; i < filas; i++) {
+        cout << "F" << i + 1 << " ";
+        for (int j = 0; j < columnas; j++) {
+            cout << (espacios[i][j] == 0 ? "L " : "O ");
+        }
+        cout << "\n";
+    }
+}
+
+int MatrizEspacios::getOcupados() const {
+    int cont = 0;
+    for (int i = 0; i < filas; i++)
+        for (int j = 0; j < columnas; j++)
+            if (espacios[i][j] == 1) cont++;
+    return cont;
+}
+
+int MatrizEspacios::getLibres() const {
+    return (filas * columnas) - getOcupados();
+}
+
+double MatrizEspacios::porcentajeOcupacion() const {
+    int total = filas * columnas;
+    if (total == 0) return 0.0;
+    return (static_cast<double>(getOcupados()) / total) * 100.0;
+}
