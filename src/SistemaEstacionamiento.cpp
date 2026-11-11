@@ -18,11 +18,9 @@ void SistemaEstacionamiento::registrarEncargado(const string& id, const string& 
 }
 
 void SistemaEstacionamiento::registrarSolicitud(const string& placa, const string& propietario, const string& tipo) {
-    // Validar que la placa no esté en espera
     if (solicitudes.buscarPorPlaca(placa) != nullptr) {
         throw logic_error("La placa ya esta registrada en espera.");
     }
-    // Validar que no esté estacionada
     if (estacionados.buscar(placa) != nullptr) {
         throw logic_error("La placa ya esta registrada en el estacionamiento.");
     }
@@ -34,30 +32,21 @@ void SistemaEstacionamiento::procesarSiguiente() {
     if (solicitudes.estaVacia()) {
         throw underflow_error("No hay solicitudes pendientes.");
     }
-    
+
     int f, c;
     if (!matriz->buscarDisponible(f, c)) {
         throw overflow_error("No hay espacios disponibles.");
     }
-    
+
     if (encargados.estaVacia()) {
         throw logic_error("No hay encargados registrados.");
     }
 
-    // Sacar de la lista simple
     Vehiculo v = solicitudes.procesarPrimera();
-    
-    // Obtener encargado actual
     Encargado& enc = encargados.getActual();
-    
-    // Registrar en lista doble
     VehiculoEstacionado ve(v, f, c, enc.getId());
     estacionados.agregar(ve);
-    
-    // Ocupar matriz
     matriz->ocupar(f, c);
-    
-    // Actualizar encargado y avanzar turno
     enc.incrementarAtendidos();
     encargados.avanzarTurno();
     
@@ -79,13 +68,32 @@ void SistemaEstacionamiento::registrarSalida(const string& placa, int horas) {
     int f = ve->getFila();
     int c = ve->getColumna();
     
-    // Liberar espacio en matriz y eliminar de lista doble
     matriz->liberar(f, c);
     estacionados.eliminar(placa);
-    
     totalRecaudado += monto;
     
     cout << "Vehiculo " << placa << " retirado." << endl;
     cout << "Monto a pagar: " << monto << " colones" << endl;
     cout << "Espacio (" << f+1 << "," << c+1 << ") liberado." << endl;
+}
+
+void SistemaEstacionamiento::mostrarReporte() const {
+    cout << "\n--- REPORTE GENERAL ---" << endl;
+    cout << "Solicitudes pendientes: " << solicitudes.getCantidad() << endl;
+    cout << "Vehiculos estacionados: " << estacionados.getCantidad() << endl;
+    cout << "Automoviles estacionados: " << estacionados.contarPorTipo("Automovil") << endl;
+    cout << "Motocicletas estacionadas: " << estacionados.contarPorTipo("Motocicleta") << endl;
+    cout << "Espacios ocupados: " << matriz->getOcupados() << endl;
+    cout << "Espacios libres: " << matriz->getLibres() << endl;
+    cout << "Porcentaje de ocupacion: " << matriz->porcentajeOcupacion() << "%" << endl;
+    cout << "Total recaudado: " << totalRecaudado << " colones" << endl;
+    
+    cout << "\nVehiculos atendidos por encargado:" << endl;
+    for (IteradorCircular it = encargados.begin(); it != encargados.end(); ++it) {
+        cout << (*it).toString() << endl;
+    }
+}
+
+void SistemaEstacionamiento::mostrarMatriz() const {
+    matriz->mostrar();
 }

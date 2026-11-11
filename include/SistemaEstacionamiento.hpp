@@ -24,5 +24,6 @@ public:
     void procesarSiguiente();
     void registrarSalida(const string& placa, int horas);
     void mostrarReporte() const;
+    void mostrarMatriz() const;
 };
 #endif
