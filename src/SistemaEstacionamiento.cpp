@@ -64,3 +64,28 @@ void SistemaEstacionamiento::procesarSiguiente() {
     cout << "Solicitud: " << v.getPlaca() << " ingreso al espacio (" << f+1 << "," << c+1 << ")" << endl;
     cout << "Encargado: " << enc.getNombre() << endl;
 }
+
+void SistemaEstacionamiento::registrarSalida(const string& placa, int horas) {
+    if (horas <= 0) {
+        throw invalid_argument("Las horas deben ser mayores que cero.");
+    }
+    
+    VehiculoEstacionado* ve = estacionados.buscar(placa);
+    if (ve == nullptr) {
+        throw out_of_range("Vehiculo no encontrado.");
+    }
+    
+    double monto = ve->calcularMonto(horas);
+    int f = ve->getFila();
+    int c = ve->getColumna();
+    
+    // Liberar espacio en matriz y eliminar de lista doble
+    matriz->liberar(f, c);
+    estacionados.eliminar(placa);
+    
+    totalRecaudado += monto;
+    
+    cout << "Vehiculo " << placa << " retirado." << endl;
+    cout << "Monto a pagar: " << monto << " colones" << endl;
+    cout << "Espacio (" << f+1 << "," << c+1 << ") liberado." << endl;
+}
