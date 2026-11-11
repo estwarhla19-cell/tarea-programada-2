@@ -26,3 +26,12 @@ Se utiliza la biblioteca `<stdexcept>` para lanzar excepciones en situaciones in
 - `logic_error`: Al intentar registrar una placa duplicada o no haber encargados.
 
 ## Resultados de las Pruebas
+Se implementaron un total de 13 pruebas automatizadas utilizando la función `assert` en el archivo `tests/test_estructuras.cpp`. Todas las pruebas se ejecutaron de forma exitosa, validando los siguientes aspectos del sistema:
+
+- **Lista Simple:** Inserción de solicitudes, búsqueda por placa y cancelación de nodos.
+- **Lista Doble:** Inserción, búsqueda y eliminación de vehículos estacionados, manteniendo la integridad de los punteros anterior y siguiente.
+- **Lista Circular:** Registro de encargados, verificación del turno actual y avance correcto de la rotación.
+- **Matriz Dinámica:** Inicialización de espacios libres, búsqueda del primer espacio disponible, ocupación y liberación de posiciones.
+- **Integración:** Verificación de que el sistema procesa correctamente un vehículo a través de las 4 estructuras sin fugas de memoria.
+
+El programa compila sin errores ni advertencias y el menú interactivo responde adecuadamente a las entradas del usuario, capturando las excepciones correspondientes ante datos inválidos.
