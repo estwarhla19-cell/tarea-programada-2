@@ -21,3 +21,7 @@ g++ -std=c++17 src/*.cpp -I include -o app
 ## Autor
 -Jordan Loria
 -C5G645
+
+## Para compilar y ejecutar las pruebas automatizadas 
+g++ -std=c++17 tests/test_estructuras.cpp src/*.cpp -I include -o test_app
+./test_app
