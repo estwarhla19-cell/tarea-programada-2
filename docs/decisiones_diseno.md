@@ -16,11 +16,13 @@ Cada estructura fue implementada desde cero, separando su cabecera (.hpp) de su 
 - **Encargado:** Contiene el ID, nombre y la cantidad de vehículos atendidos.
 
 ## Manejo de Memoria Dinámica
-Todas las estructuras utilizan new para crear nodos y delete para liberarlos. La clase MatrizEspacios utiliza new int*[filas] y new int[columnas] para cada fila, liberando la memoria con delete[] en el orden correcto para evitar fugas de memoria.
+Todas las estructuras utilizan `new` para crear nodos y `delete` para liberarlos. La clase `MatrizEspacios` utiliza `new int*[filas]` y `new int[columnas]` para cada fila, liberando la memoria con `delete[]` en el orden correcto para evitar fugas de memoria.
 
 ## Manejo de Excepciones
-Se utiliza la biblioteca <stdexcept> para lanzar excepciones en situaciones inválidas:
-- underflow_error: Al intentar procesar una lista de espera vacía.
-- overflow_error: Cuando el estacionamiento está lleno.
-- invalid_argument: Al ingresar horas negativas o dimensiones inválidas.
-- logic_error: Al intentar registrar una placa duplicada o no haber encargados.
+Se utiliza la biblioteca `<stdexcept>` para lanzar excepciones en situaciones inválidas:
+- `underflow_error`: Al intentar procesar una lista de espera vacía.
+- `overflow_error`: Cuando el estacionamiento está lleno.
+- `invalid_argument`: Al ingresar horas negativas o dimensiones inválidas.
+- `logic_error`: Al intentar registrar una placa duplicada o no haber encargados.
+
+## Resultados de las Pruebas
